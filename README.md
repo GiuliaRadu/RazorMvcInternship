@@ -43,10 +43,10 @@ heroku container:login
 
 Push container
 ```
-heroku container:push -a borys-internship-class web
+heroku container:push -a internship-class-giulia web
 ```
 
 Release the container
 ```
-heroku container:release -a borys-internship-class web
+heroku container:release -a internship-class-giulia web
 ```
