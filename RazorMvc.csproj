@@ -8,6 +8,10 @@
   <ItemGroup>
     <None Remove="*.log" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\codeRules.png" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
