@@ -8,7 +8,6 @@ The app is deployed to: [heroku](https://internship-class-giulia.herokuapp.com/)
 To work with this application you need to install:
 * [.Net Core SDK 5.0+](https://dotnet.microsoft.com/download/dotnet/5.0) - to run and develop the application
 * [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) - to deploy the application
-* 
 ## Build and run locally
 
 ```
