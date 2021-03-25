@@ -1,6 +1,14 @@
 # Razor MVC application
 
-The infrastructure inspiration got [here](https://dev.to/alrobilliard/deploying-net-core-to-heroku-1lfe) 
+The infrastructure inspiration got [here](https://dev.to/alrobilliard/deploying-net-core-to-heroku-1lfe)
+The app is deployed to: [heroku](https://internship-class-giulia.herokuapp.com/)
+
+## Prerequisites
+
+To work with this application you need to install:
+* [.Net Core SDK 5.0+](https://dotnet.microsoft.com/download/dotnet/5.0) - to run and develop the application
+* [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) - to deploy the application
+* 
 ## Build and run locally
 
 ```
