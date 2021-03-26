@@ -36,6 +36,12 @@ namespace RazorMvc.Controllers
             return intershipService.AddMember(member);
         }
 
+        [HttpPut]
+        public void UpdateMember(int index, string name)
+        {
+            intershipService.UpdateMember(index, name);
+        }
+
 
         public IActionResult Privacy()
         {

@@ -10,7 +10,7 @@ $(document).ready(function () {
                 // Remember string interpolation
                 $("#list").append(`
                     <li class="member">
-                        <span class="name">${data}</span></span><i class="delete fa fa-remove"><span class=" fa fa-pencil"></i>
+                        <span class="name">${data}</span><span class="delete fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
                     </li>`
                 );
                 $("#newcomer").val("");

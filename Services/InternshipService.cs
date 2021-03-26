@@ -1,4 +1,5 @@
 ﻿using RazorMvc.Models;
+using System;
 
 namespace RazorMvc.Services
 {
@@ -20,6 +21,11 @@ namespace RazorMvc.Services
         public InternshipClass GetClass()
         {
             return _internshipClass;
+        }
+
+        internal void UpdateMember(int index, string name)
+        {
+            _internshipClass.Members[index] = name;
         }
     }
 }
