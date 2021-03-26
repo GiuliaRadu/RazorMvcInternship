@@ -6,7 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="out\**" />
+    <Compile Remove="RazorMvc.Tests\**" />
+    <Content Remove="out\**" />
+    <Content Remove="RazorMvc.Tests\**" />
+    <EmbeddedResource Remove="out\**" />
+    <EmbeddedResource Remove="RazorMvc.Tests\**" />
     <None Remove="*.log" />
+    <None Remove="out\**" />
+    <None Remove="RazorMvc.Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
