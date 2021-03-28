@@ -32,7 +32,7 @@
             url: `/Home/UpdateMember?index=${index}&name=${name}`,
             type: 'PUT',
             success: function (response) {
-                
+                $('.name').get(index).replaceWith(name);
             }
 
         });
