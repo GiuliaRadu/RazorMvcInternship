@@ -6,6 +6,8 @@
 @section scripts {
     <script type="text/javascript" src="~/js/addNewComer.js"></script>
     <script type="text/javascript" src="~/js/removeNewComer.js"></script>
+    <script type="text/javascript" src="~/js/populateForecast.js"></script>
+
 }
 
 @section modalWindows {
@@ -69,6 +71,12 @@
         <i class="fa fa-cut"></i>
         Clear
     </button>
+
+    <div class="weather">
+        <p>Date: <div id="date">none</div></p>
+        <p>Temperature: <div id="temperature">10 C</div></p>
+        <p>Summary: <div id="summary">Cool</div></p>
+    </div>
 </body>
 </html>
 
