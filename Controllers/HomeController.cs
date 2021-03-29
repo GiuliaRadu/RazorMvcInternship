@@ -17,8 +17,6 @@ namespace RazorMvc.Controllers
             this.intershipService = intershipService;
         }
 
-
-
         public IActionResult Index()
         {
             return View(intershipService.GetClass());
@@ -42,10 +40,8 @@ namespace RazorMvc.Controllers
             intershipService.UpdateMember(index, name);
         }
 
-
         public IActionResult Privacy()
         {
-
             return View();
         }
 
@@ -54,6 +50,5 @@ namespace RazorMvc.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }
