@@ -37,15 +37,16 @@ namespace RazorMvc.webApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            double latitude = double.Parse(configuration["WeatherForecast:latitude"]);
-            double longitude = double.Parse(configuration["WeatherForecast:longitude"]);
-            var apiKey = configuration["WeatherForecast:apiKey"];
-            var weatherForecasts = (List<WeatherForecast>)FetchWeatherForecasts(latitude, longitude, apiKey);
+            var weatherForecasts = (List<WeatherForecast>)FetchWeatherForecasts();
             return weatherForecasts.GetRange(1, 5);
         }
 
-        public List<WeatherForecast> FetchWeatherForecasts(double latitude, double longitude, string apiKey)
+        public List<WeatherForecast> FetchWeatherForecasts()
         {
+            double latitude = double.Parse(configuration["WeatherForecast:latitude"]);
+            double longitude = double.Parse(configuration["WeatherForecast:longitude"]);
+            var apiKey = configuration["WeatherForecast:apiKey"];
+
             var endpoint = $"https://api.openweathermap.org/data/2.5/onecall?lat={latitude}&lon={longitude}&exclude=hourly,minutely&appid={apiKey}";
             var client = new RestClient(endpoint);
             client.Timeout = -1;
