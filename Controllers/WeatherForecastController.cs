@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using RazorMvc.Utilities;
 using RestSharp;
+using System.Collections.Generic;
 
 namespace RazorMvc.webApi.Controllers
 {
@@ -34,17 +35,14 @@ namespace RazorMvc.webApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                //TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)],
-            })
-            .ToArray();
+            var latitude = 45.75;
+            var longitude = 25.3333;
+            var apiKey = "8ea3b1799c36aefca813bbb70b937d96";
+            var weatherForecasts = (List<WeatherForecast>)FetchWeatherForecasts(latitude, longitude, apiKey);
+            return weatherForecasts.GetRange(1, 5);
         }
 
-        public IList<WeatherForecast> FetchWeatherForecasts(double latitude, double longitude, string apiKey)
+        public List<WeatherForecast> FetchWeatherForecasts(double latitude, double longitude, string apiKey)
         {
             var endpoint = $"https://api.openweathermap.org/data/2.5/onecall?lat={latitude}&lon={longitude}&exclude=hourly,minutely&appid={apiKey}";
             var client = new RestClient(endpoint);
@@ -54,33 +52,11 @@ namespace RazorMvc.webApi.Controllers
             return ConvertResponseContentToListOfWeatherForecast(response.Content);
         }
 
-        //private IList<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
-        //{
-        //    var apiResponse = JsonSerializer.Deserialize<WeatherApiResponse>(content);
-
-        //    List <WeatherForecast> forecasts = new List<WeatherForecast>();
-
-        //    for (int i = 0; i < apiResponse.daily.Length; i++)
-        //    {
-        //        double tempK = apiResponse.daily[i].temp.day;
-        //        string summary = apiResponse.daily[i].weather[0].description;
-
-        //        forecasts.Add(new WeatherForecast
-        //        {
-        //            TemperatureC = tempK - 273.15,
-        //            Summary = summary,
-        //        });
-
-        //    }
-
-        //    return forecasts;
-        //}
-
-        public IList<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
+        public List<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
         {
             JToken root = JObject.Parse(content);
             JToken testToken = root["daily"];
-            IList<WeatherForecast> forecasts = new List<WeatherForecast>();
+            var forecasts = new List<WeatherForecast>();
             foreach (var token in testToken)
             {
                 var forecast = new WeatherForecast();
