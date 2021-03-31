@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using RazorMvc.Utilities;
 using RestSharp;
-using System.Collections.Generic;
 
 namespace RazorMvc.webApi.Controllers
 {
@@ -22,10 +22,12 @@ namespace RazorMvc.webApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IConfiguration configuration;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -35,9 +37,9 @@ namespace RazorMvc.webApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var latitude = 45.75;
-            var longitude = 25.3333;
-            var apiKey = "8ea3b1799c36aefca813bbb70b937d96";
+            double latitude = double.Parse(configuration["WeatherForecast:latitude"]);
+            double longitude = double.Parse(configuration["WeatherForecast:longitude"]);
+            var apiKey = configuration["WeatherForecast:apiKey"];
             var weatherForecasts = (List<WeatherForecast>)FetchWeatherForecasts(latitude, longitude, apiKey);
             return weatherForecasts.GetRange(1, 5);
         }
