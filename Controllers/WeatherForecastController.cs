@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using RazorMvc.Utilities;
 using RestSharp;
 
@@ -37,7 +38,7 @@ namespace RazorMvc.webApi.Controllers
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
+                //TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)],
             })
             .ToArray();
@@ -53,23 +54,40 @@ namespace RazorMvc.webApi.Controllers
             return ConvertResponseContentToListOfWeatherForecast(response.Content);
         }
 
-        private IList<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
+        //private IList<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
+        //{
+        //    var apiResponse = JsonSerializer.Deserialize<WeatherApiResponse>(content);
+
+        //    List <WeatherForecast> forecasts = new List<WeatherForecast>();
+
+        //    for (int i = 0; i < apiResponse.daily.Length; i++)
+        //    {
+        //        double tempK = apiResponse.daily[i].temp.day;
+        //        string summary = apiResponse.daily[i].weather[0].description;
+
+        //        forecasts.Add(new WeatherForecast
+        //        {
+        //            TemperatureC = tempK - 273.15,
+        //            Summary = summary,
+        //        });
+
+        //    }
+
+        //    return forecasts;
+        //}
+
+        public IList<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
         {
-            var apiResponse = JsonSerializer.Deserialize<WeatherApiResponse>(content);
-
-            List <WeatherForecast> forecasts = new List<WeatherForecast>();
-
-            for (int i = 0; i < apiResponse.daily.Length; i++)
+            JToken root = JObject.Parse(content);
+            JToken testToken = root["daily"];
+            IList<WeatherForecast> forecasts = new List<WeatherForecast>();
+            foreach (var token in testToken)
             {
-                double tempK = apiResponse.daily[i].temp.day;
-                string summary = apiResponse.daily[i].weather[0].description;
-
-                forecasts.Add(new WeatherForecast
-                {
-                    TemperatureC = tempK - 273.15,
-                    Summary = summary,
-                });
-
+                var forecast = new WeatherForecast();
+                forecast.Date = DateTimeConverter.ConvertEpochToDatetime(long.Parse(token["dt"].ToString()));
+                forecast.TemperatureK = double.Parse(token["temp"]["day"].ToString());
+                forecast.Summary = token["weather"][0]["description"].ToString();
+                forecasts.Add(forecast);
             }
 
             return forecasts;
