@@ -452,3 +452,5 @@ $RECYCLE.BIN/
 /out
 /RazorMvc.xml
 *.bak
+/bin
+*.obj
