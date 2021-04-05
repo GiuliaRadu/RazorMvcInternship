@@ -1,6 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RazorMvc.Data;
 using RazorMvc.Models;
 using RazorMvc.Services;
 
@@ -9,40 +12,25 @@ namespace RazorMvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly InternshipService intershipService;
+        private readonly IInternshipService intershipService;
+        private readonly InternDbContext db;
 
-        public HomeController(ILogger<HomeController> logger, InternshipService intershipService)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, InternDbContext db)
         {
             _logger = logger;
             this.intershipService = intershipService;
+            this.db = db;
         }
 
         public IActionResult Index()
         {
-            return View(intershipService.GetClass());
-        }
-
-        [HttpDelete]
-        public void RemoveMember(int index)
-        {
-            intershipService.RemoveMember(index);
-        }
-
-        [HttpGet]
-        public string AddMember(string member)
-        {
-            return intershipService.AddMember(member);
-        }
-
-        [HttpPut]
-        public void UpdateMember(int index, string name)
-        {
-            intershipService.UpdateMember(index, name);
+            return View(intershipService.GetMembers());
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            var interns = db.Interns.ToList();
+            return View(interns);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -50,5 +38,45 @@ namespace RazorMvc.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpDelete]
+        public void RemoveMember(int index)
+        {
+            var internsList = intershipService.GetMembers();
+            //internsList.Any(intern => intern.Id == index);
+            Intern intern = internsList.FirstOrDefault(intern => intern.Id == index);
+
+            if (intern == null)
+            {
+                return;
+            }
+
+            intershipService.RemoveMember(intern.Id);
+        }
+
+        [HttpGet]
+        public Intern AddMember(string memberName)
+        {
+            Intern intern = new Intern();
+            intern.Name = memberName;
+            intern.DateOfJoin = DateTime.Now;
+            return intershipService.AddMember(intern);
+        }
+
+        [HttpPut]
+        public void UpdateMember(int index, string name)
+        {
+            var internsList = intershipService.GetMembers();
+            Intern intern = internsList.FirstOrDefault(intern => intern.Id == index);
+            if (intern == null)
+            {
+                return;
+            }
+
+            intern.Name = name;
+            intern.DateOfJoin = DateTime.Now;
+            intershipService.UpdateMember(intern);
+        }
+
     }
 }
