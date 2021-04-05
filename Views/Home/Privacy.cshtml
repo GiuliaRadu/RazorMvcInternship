@@ -1,6 +1,39 @@
-@{
-    ViewData["Title"] = "Privacy Policy";
-}
+@model IEnumerable<RazorMvc.Models.Intern>
+
+@{ ViewData["Title"] = "Loading interns from the database"; }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>We respect privacy, GDPR and other stuff very much. Don't worry, be happy!</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfJoin)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfJoin)
+                </td>
+            </tr>
+}
+    </tbody>
+</table>

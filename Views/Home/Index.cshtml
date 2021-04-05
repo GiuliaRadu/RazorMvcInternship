@@ -1,14 +1,18 @@
-﻿@section styles {
+﻿@model IList<Intern>
+@{
+    ViewData["Title"] = "Information about our classroom";
+}
+
+@section styles {
     <!-- Read about this here https://fontawesome.com/icons?d=gallery&p=2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 }
 
 @section scripts {
-    <script type="text/javascript" src="~/js/addNewComer.js"></script>
-    <script type="text/javascript" src="~/js/removeNewComer.js"></script>
+    <script type="text/javascript" src="~/js/addNewcomer.js"></script>
+    <script type="text/javascript" src="~/js/removeNewcomer.js"></script>
     <script type="text/javascript" src="~/js/populateForecast.js"></script>
-
-}
+}﻿
 
 @section modalWindows {
     <!-- Modal -->
@@ -41,21 +45,21 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Internship class</title>
+
 </head>
 <body>
-    <h2>Our rules</h2>
-    <img src="~/images/codeRules.png" alt="code rules" width="400" />
-    <h2>Here is our classroom</h2>
+    <h1>Internship Landpage</h1>
+    <p>Here is our classroom</p>
 
     <ul id="list">
-        @for (var i = 0; i < Model.Members.Count; i++)
+        @for (var i = 0; i < Model.Count; i++)
         {
-            var member = Model.Members[i];
+            var member = Model[i];
 
-            <li class="member">
+            <li class="member" member-id="@member.Id">
                 <div class="memberInfo">
-                    <span class="name">@member</span><i class="delete fa fa-remove"></i>
+                    <span class="name">@member.Name</span><i class="delete fa fa-remove"></i>
                     <i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
                 </div>
             </li>
@@ -71,13 +75,12 @@
         <i class="fa fa-cut"></i>
         Clear
     </button>
+    <p></p><img src="~/img/GoodCodeRules.png" width="200" />
 
     <div class="weather">
-        <p>Date: <div id="date">none</div></p>
-        <p>Temperature: <div id="temperature">10 C</div></p>
+        <p>Date: <div id="date">29.03.2021</div></p>
+        <p>TemperatureC: <div id="temperature">10</div></p>
         <p>Summary: <div id="summary">Cool</div></p>
     </div>
 </body>
 </html>
-
-
