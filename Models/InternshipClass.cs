@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RazorMvc.Models
 {
     public class InternshipClass
     {
-        private List<string> _members;
+        private readonly List<Intern> _members;
 
         public InternshipClass()
         {
-            _members = new List<string>
+            _members = new List<Intern>
             {
-                "Collegue1",
-                "Collegue2",
-                "Collegue3",
+                new Intern { Name = "Collegue1", DateOfJoin = DateTime.Parse("2021-04-01") },
+                new Intern { Name = "Collegue2", DateOfJoin = DateTime.Parse("2021-04-01") },
+                new Intern { Name = "Collegue3", DateOfJoin = DateTime.Parse("2021-03-31") },
             };
         }
 
-        public IList<string> Members
+        public IList<Intern> Members
         {
             get { return _members; }
         }

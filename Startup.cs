@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using RazorMvc.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using RazorMvc.Data;
 using RazorMvc.Services;
-using Microsoft.EntityFrameworkCore;
+using RazorMvc.Data;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace RazorMvc
 {
@@ -32,18 +29,22 @@ namespace RazorMvc
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<InternDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddControllersWithViews();
-            services.AddSingleton(typeof(InternshipService));
-			services.AddSwaggerGen(c =>
+            services.AddScoped<IInternshipService, InternshipDbService>();
+
+            services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RazorMvc.webApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RazorMVC.WebAPI", Version = "v1" });
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,15 +53,18 @@ namespace RazorMvc
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-				app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RazorMvc.webApi v1"));
+                app.UseMigrationsEndPoint();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RazorMVC.WebAPI v1"));
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -1,31 +1,34 @@
-﻿using RazorMvc.Models;
-using System;
+﻿using System.Linq;
+using RazorMvc.Data;
+using RazorMvc.Models;
+using System.Collections.Generic;
 
 namespace RazorMvc.Services
 {
-    public class InternshipService
+    public class InternshipService : IInternshipService
     {
-        private readonly InternshipClass _internshipClass = new ();
+        private readonly InternshipClass _internshipClass = new();
 
         public void RemoveMember(int index)
+
         {
             _internshipClass.Members.RemoveAt(index);
         }
 
-        public string AddMember(string member)
+        public Intern AddMember(Intern intern)
         {
-            _internshipClass.Members.Add(member);
-            return member;
+            _internshipClass.Members.Add(intern);
+            return intern;
         }
 
-        public InternshipClass GetClass()
+        public IList<Intern> GetMembers()
         {
-            return _internshipClass;
+            return _internshipClass.Members;
         }
 
-        internal void UpdateMember(int index, string name)
+        public void UpdateMember(Intern intern)
         {
-            _internshipClass.Members[index] = name;
+            _internshipClass.Members[intern.Id] = intern;
         }
     }
 }
