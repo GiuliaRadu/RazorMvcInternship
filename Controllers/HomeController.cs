@@ -43,7 +43,6 @@ namespace RazorMvc.Controllers
         public void RemoveMember(int index)
         {
             var internsList = intershipService.GetMembers();
-            //internsList.Any(intern => intern.Id == index);
             Intern intern = internsList.FirstOrDefault(intern => intern.Id == index);
 
             if (intern == null)
