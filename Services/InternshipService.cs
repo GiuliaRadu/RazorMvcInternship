@@ -2,6 +2,7 @@
 using RazorMvc.Data;
 using RazorMvc.Models;
 using System.Collections.Generic;
+using RazorMvc.Hubs;
 
 namespace RazorMvc.Services
 {
@@ -29,6 +30,11 @@ namespace RazorMvc.Services
         public void UpdateMember(Intern intern)
         {
             _internshipClass.Members[intern.Id] = intern;
+        }
+
+        public void SubscribeToAddMember(IAddMemberSubscriber messageHub)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
