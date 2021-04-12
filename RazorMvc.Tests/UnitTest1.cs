@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using RazorMvc.Services;
+using RazorMvc.Models;
 
 namespace RazorMvc.Tests
 {
@@ -15,7 +16,7 @@ namespace RazorMvc.Tests
             // Act
 
             // Assert
-            Assert.Equal(3, intershipService.GetClass().Members.Count);
+            Assert.Equal(3, intershipService.GetMembers().Count);
         }
 
         [Fact]
@@ -25,11 +26,13 @@ namespace RazorMvc.Tests
             var intershipService = new InternshipService();
 
             // Act
-            intershipService.AddMember("Marko");
+            Intern memberToAdd = new Intern();
+            memberToAdd.Name = "Marko";
+            intershipService.AddMember(memberToAdd);
 
             // Assert
-            Assert.Equal(4, intershipService.GetClass().Members.Count);
-            Assert.Contains("Marko", intershipService.GetClass().Members);
+            Assert.Equal(4, intershipService.GetMembers().Count);
+            Assert.Contains(memberToAdd, intershipService.GetMembers());
         }
     }
 }
