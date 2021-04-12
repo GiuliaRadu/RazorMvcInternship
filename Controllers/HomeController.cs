@@ -13,13 +13,13 @@ namespace RazorMvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IInternshipService intershipService;
-        private readonly InternDbContext db;
+        private readonly MessageService messageService;
 
-        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, InternDbContext db)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, MessageService messageService)
         {
             _logger = logger;
             this.intershipService = intershipService;
-            this.db = db;
+            this.messageService = messageService;
         }
 
         public IActionResult Index()
@@ -29,13 +29,12 @@ namespace RazorMvc.Controllers
 
         public IActionResult Privacy()
         {
-            var interns = db.Interns.ToList();
-            return View(interns);
+            return View(intershipService.GetMembers());
         }
 
         public IActionResult Chat()
         {
-            return View();
+            return View(messageService.GetAllMessages());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

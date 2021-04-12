@@ -47,7 +47,7 @@ namespace RazorMvc
             });
 
             services.AddSignalR();
-
+            services.AddSingleton<MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

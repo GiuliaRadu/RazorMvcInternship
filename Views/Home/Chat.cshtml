@@ -1,4 +1,4 @@
-﻿@page
+﻿@model IList<Message>
 <div class="container">
     <div class="row">&nbsp;</div>
     <div class="row">
@@ -23,7 +23,16 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <ul id="messagesList"></ul>
+        <ul id="messagesList">
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var message = Model[i];
+
+            <li>
+                @message.User says @message.MessageContent
+            </li>
+            }
+        </ul>
     </div>
 </div>
 @section scripts {
