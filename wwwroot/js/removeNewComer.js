@@ -7,7 +7,7 @@
 
         $.ajax({
             method: "DELETE",
-            url: `/Home/RemoveMember?index=${id}`,
+            url: `api/Internship/${id}`,
             success: function (data) {
 
                 $li.remove();

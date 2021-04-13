@@ -4,8 +4,10 @@ $(document).ready(function () {
     $("#add").click(function () {
         var newcomerName = $("#newcomer").val();
         $.ajax({
-            url: `/Home/AddMember?member=${newcomerName}`,
-            url: `/Home/AddMember?memberName=${newcomerName}`,
+            url: 'api/Internship/',
+            contentType: 'application/json',
+            data: JSON.stringify({ "Name": `${newcomerName}` }),
+            method: "POST",
             success: function (data) {
                 // Remember string interpolation
                
@@ -36,26 +38,32 @@ $(document).ready(function () {
     })
     $("#list").on("click", ".startEdit", function () {
         var targetMemberTag = $(this).closest('li');
-        var id = targetMemberTag.attr('member-id');
+        var serverIndex = targetMemberTag.attr('member-id');
+        var clientIndex = targetMemberTag.index();
         var currentName = targetMemberTag.find(".name").text();
-        $('#editClassmate').attr("member-id", id);
+        $('#editClassmate').attr("member-id", serverIndex);
+        $('#editClassmate').attr("memberIndex", clientIndex);
         $('#classmateName').val(currentName);
     })
     $("#editClassmate").on("click", "#submit", function () {
-        var name = $('#classmateName').val();
-        var index = $('#editClassmate').attr("member-id");
-        var targetMember = $(`li[member-id=${index}]`);
+        var newName = $('#classmateName').val();
+        var id = $('#editClassmate').attr("member-id");
+        var index = $('#editClassmate').attr("memberIndex");
+
         $.ajax({
-            url: `/Home/UpdateMember?index=${index}&name=${name}`,
-            type: 'PUT',
-            success: function () {
-                targetMember.find('.name').text(name);
+            contentType: 'application/json',
+            data: JSON.stringify({ "Name": `${newName}` }),
+            method: "PUT",
+            url: `api/Internship/${id}`,
+            success: function (response) {
+                $('.name').eq(index).replaceWith(newName);
             },
-            error: function () {
-                alert(`Failed to replace member ${name}`);
+            error: function (data) {
+                alert(`Failed to update`);
             }
-        })
+        });
     })
+
     $("#editClassmate").on("click", "#cancel", function () {
         console.log('cancel changes');
     })
