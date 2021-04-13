@@ -46,8 +46,11 @@ namespace RazorMvc.Services
         {
             var internToUpdate = GetMemberById(intern.Id);
             internToUpdate.Name = intern.Name;
-            //if (intern.DateOfJoin > DateTime.MinValue)
-            //    internToUpdate.DateOfJoin = DateTime.Now;
+            if (intern.DateOfJoin > DateTime.MinValue)
+            {
+                internToUpdate.DateOfJoin = DateTime.Now;
+            }
+
             db.Interns.Update(internToUpdate);
             db.SaveChanges();
         }
