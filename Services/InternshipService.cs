@@ -8,7 +8,7 @@ namespace RazorMvc.Services
 {
     public class InternshipService : IInternshipService
     {
-        private readonly InternshipClass _internshipClass = new();
+        private readonly InternshipClass _internshipClass = new ();
 
         public void RemoveMember(int index)
 
@@ -30,11 +30,6 @@ namespace RazorMvc.Services
         public void UpdateMember(Intern intern)
         {
             _internshipClass.Members[intern.Id] = intern;
-        }
-
-        public void SubscribeToAddMember(IAddMemberSubscriber messageHub)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

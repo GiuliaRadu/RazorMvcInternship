@@ -3,11 +3,12 @@ $(document).ready(function () {
     // see https://api.jquery.com/click/
     $("#add").click(function () {
         var newcomerName = $("#newcomer").val();
-
         $.ajax({
             url: `/Home/AddMember?member=${newcomerName}`,
             url: `/Home/AddMember?memberName=${newcomerName}`,
             success: function (data) {
+                // Remember string interpolation
+               
                 $("#newcomer").val("");
             },
             error: function (data) {
@@ -40,12 +41,10 @@ $(document).ready(function () {
         $('#editClassmate').attr("member-id", id);
         $('#classmateName').val(currentName);
     })
-
     $("#editClassmate").on("click", "#submit", function () {
         var name = $('#classmateName').val();
         var index = $('#editClassmate').attr("member-id");
         var targetMember = $(`li[member-id=${index}]`);
-
         $.ajax({
             url: `/Home/UpdateMember?index=${index}&name=${name}`,
             type: 'PUT',
@@ -57,11 +56,9 @@ $(document).ready(function () {
             }
         })
     })
-
     $("#editClassmate").on("click", "#cancel", function () {
         console.log('cancel changes');
     })
-
     function refreshWeatherForecast() {
         $.ajax({
             url: `/WeatherForecast`,
@@ -79,7 +76,6 @@ $(document).ready(function () {
     }
     refreshWeatherForecast();
     setInterval(refreshWeatherForecast, 5000);
-
     function formatDate(jsonDate) {
         function join(t, a, s) {
             function format(m) {
