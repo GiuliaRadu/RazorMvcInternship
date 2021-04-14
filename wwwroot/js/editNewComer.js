@@ -23,7 +23,7 @@
             method: "PUT",
             url: `api/Internship/${id}`,
             success: function (response) {
-                $('.name').eq(index).replaceWith(newName);
+                //$('.name').eq(index).replaceWith(newName);
             },
             error: function (data) {
                 alert(`Failed to update`);
