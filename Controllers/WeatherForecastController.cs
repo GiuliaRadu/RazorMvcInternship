@@ -41,6 +41,7 @@ namespace RazorMvc.webApi.Controllers
             return weatherForecasts.GetRange(1, 5);
         }
 
+        [HttpGet("/forecasts")]
         public List<WeatherForecast> FetchWeatherForecasts()
         {
             double latitude = double.Parse(configuration["WeatherForecast:latitude"]);
@@ -55,6 +56,7 @@ namespace RazorMvc.webApi.Controllers
             return ConvertResponseContentToListOfWeatherForecast(response.Content);
         }
 
+        [NonAction]
         public List<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
         {
             JToken root = JObject.Parse(content);
