@@ -23,17 +23,17 @@ dotnet run
 ## Build and run in docker
 
 ```
-docker build -t mvc .
-docker run -d -p 8080:80 --name mvc_container mvc
+docker build -t mvc_guilia .
+docker run -d -p 8080:80 --name mvc_container_guilia mvc_guilia
 ```
 
 to stop container
 ```
-docker stop mvc_container
+docker stop mvc_container_guilia
 ```
 to remove container
 ```
-docker rm mvc_container
+docker rm mvc_container_guilia
 ```
 
 ## Deploy to heroku
