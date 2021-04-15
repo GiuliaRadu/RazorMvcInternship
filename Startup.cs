@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,12 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RazorMvc.Data;
-using RazorMvc.Services;
-using RazorMvc.Data;
-using System;
-using System.IO;
-using System.Reflection;
 using RazorMvc.Hubs;
+using RazorMvc.Services;
 
 namespace RazorMvc
 {
