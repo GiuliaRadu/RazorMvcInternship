@@ -5,7 +5,7 @@ using RazorMvc.Models;
 
 namespace RazorMvc.Tests
 {
-    public class UnitTest1
+    public class InternshipServiceTests
     {
         [Fact]
         public void InitiallyContainsThreeMembers()
