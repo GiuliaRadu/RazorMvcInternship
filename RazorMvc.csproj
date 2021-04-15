@@ -24,6 +24,8 @@
   
   <ItemGroup>
   
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
+  
     <PackageReference Include="RestClient" Version="3.446.20952" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
