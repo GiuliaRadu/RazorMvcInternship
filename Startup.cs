@@ -16,23 +16,45 @@ namespace RazorMvc
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private string connectionString;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            connectionString = env.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") : GetConnectionString();
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public static string ConvertDatabaseUrlToHerokuString(string envDatabaseUrl)
+        {
+            Uri url;
+            bool isUrl = Uri.TryCreate(envDatabaseUrl, UriKind.Absolute, out url);
+            if (isUrl)
+            {
+                return $"Server={url.Host};Port={url.Port};Database={url.LocalPath.Substring(1)};User Id={url.UserInfo.Split(':')[0]};Password={url.UserInfo.Split(':')[1]};Pooling=true;SSL Mode=Require;Trust Server Certificate=True;";
+            }
+
+            throw new FormatException($"Database Url is of invalid format! Check this: {envDatabaseUrl}.");
+        }
+
+        private string GetConnectionString()
+        {
+            var envDatabaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var herokuConnectionString = ConvertDatabaseUrlToHerokuString(envDatabaseUrl);
+            return herokuConnectionString;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(connectionString));
+
             services.AddDbContext<InternDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(connectionString));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddControllersWithViews();
             services.AddScoped<IInternshipService, InternshipDbService>();
 
