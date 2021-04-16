@@ -57,7 +57,14 @@ namespace RazorMvc.webApi.Controllers
         public List<WeatherForecast> ConvertResponseContentToListOfWeatherForecast(string content)
         {
             JToken root = JObject.Parse(content);
+
             JToken testToken = root["daily"];
+            if(testToken == null)
+            {
+                JToken codToken = root["cod"];
+                JToken messageToken = root["message"];
+                throw new Exception($"Weather API doesn't work. Please check the Weather API : {messageToken}({codToken})");
+            }
             var forecasts = new List<WeatherForecast>();
 
             foreach (var token in testToken)
