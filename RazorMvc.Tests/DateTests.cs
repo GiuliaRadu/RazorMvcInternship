@@ -37,7 +37,7 @@ namespace RazorMvc.Tests
             Assert.Equal(31, dateTime.Day);
         }
 
-        [Fact]
+        [Fact (Skip = "This is contract test I run it only locally")]
         public void convertOutputOfWeatherAPIToWeatherForecast()
         {
             // Assume
@@ -46,12 +46,10 @@ namespace RazorMvc.Tests
 
 
             //Act
-            var weatherForcasts = weatherForecastController.FetchWeatherForecasts();
+            var weatherForecasts = weatherForecastController.Get();
 
             //Assert
-            Assert.Equal(8, weatherForcasts.Count);
-
-
+            Assert.Equal(5, weatherForecasts.Count);
         }
 
         [Fact]

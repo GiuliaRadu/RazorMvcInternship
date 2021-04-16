@@ -18,32 +18,33 @@ namespace RazorMvc.webApi.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IConfiguration configuration;
+        private readonly double latitude;
+        private readonly double longitude;
+        private readonly string apiKey;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
         {
             _logger = logger;
-            this.configuration = configuration;
+
+            latitude = double.Parse(configuration["WeatherForecast:latitude"], CultureInfo.InvariantCulture);
+            longitude = double.Parse(configuration["WeatherForecast:longitude"], CultureInfo.InvariantCulture);
+            apiKey = configuration["WeatherForecast:apiKey"];
         }
 
         /// <summary>
-        /// Getting Weather forecast for five days.
+        /// Getting Weather forecast for five days for default location.
         /// </summary>
         /// <returns>Enumerable of weatherForecast objects.</returns>
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public List<WeatherForecast> Get()
         {
-            var weatherForecasts = (List<WeatherForecast>)FetchWeatherForecasts();
+            var weatherForecasts = Get(this.latitude, this.longitude);
             return weatherForecasts.GetRange(1, 5);
         }
 
         [HttpGet("/forecasts")]
-        public List<WeatherForecast> FetchWeatherForecasts()
+        public List<WeatherForecast> Get(double latitude, double longitude)
         {
-            double latitude = double.Parse(configuration["WeatherForecast:latitude"], CultureInfo.InvariantCulture);
-            double longitude = double.Parse(configuration["WeatherForecast:longitude"], CultureInfo.InvariantCulture);
-            var apiKey = configuration["WeatherForecast:apiKey"];
-
             var endpoint = $"https://api.openweathermap.org/data/2.5/onecall?lat={latitude}&lon={longitude}&exclude=hourly,minutely&appid={apiKey}";
             var client = new RestClient(endpoint);
             client.Timeout = -1;
