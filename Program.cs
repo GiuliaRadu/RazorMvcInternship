@@ -44,8 +44,7 @@ namespace RazorMvc
                     {
                         logger.LogDebug("User requested to recreate database.");
                         context.Database.EnsureDeleted();
-                        context.Database.EnsureCreated();
-                        logger.LogWarning("The database was recreated.");
+                        logger.LogWarning("The database was removed.");
                     }
 
                     SeedData.Initialize(context);
