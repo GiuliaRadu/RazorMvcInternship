@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace RazorMvc.Models
 {
@@ -10,6 +11,7 @@ namespace RazorMvc.Models
 
         public DateTime DateOfJoin { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Location Location { get; set; }
     }
 }
