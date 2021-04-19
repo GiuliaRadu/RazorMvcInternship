@@ -9,5 +9,7 @@ namespace RazorMvc.Models
         public string Name { get; set; }
 
         public DateTime DateOfJoin { get; set; }
+
+        public Location Location { get; set; }
     }
 }

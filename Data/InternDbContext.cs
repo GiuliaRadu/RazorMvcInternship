@@ -12,9 +12,14 @@ namespace RazorMvc.Data
 
         public DbSet<Intern> Interns { get; set; }
 
+        public DbSet<Location> Locations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Intern>().ToTable("Interns");
+            modelBuilder.Entity<Intern>()
+              .HasOne(_ => _.Location)
+              .WithMany(_ => _.LocalInterns)
+              .HasForeignKey("LocationId");
         }
     }
 }
