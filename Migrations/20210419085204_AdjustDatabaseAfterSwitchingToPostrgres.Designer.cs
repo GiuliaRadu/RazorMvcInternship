@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RazorMvc.Data;
@@ -9,9 +10,10 @@ using RazorMvc.Data;
 namespace RazorMvc.Migrations
 {
     [DbContext(typeof(InternDbContext))]
-    partial class InternDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210419085204_AdjustDatabaseAfterSwitchingToPostrgres")]
+    partial class AdjustDatabaseAfterSwitchingToPostrgres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
