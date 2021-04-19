@@ -58,7 +58,12 @@ namespace RazorMvc.Controllers
 
             intershipService.UpdateMember(intern);
             hubContext.Clients.All.SendAsync("EditMember", intern.Name, intern.Id);
+        }
 
+        [HttpPut("{id}/{locationId}")]
+        public void Put(int id, int locationId)
+        {
+            intershipService.UpdateLocation(id, locationId);
         }
 
         // DELETE api/<InternshipController>/5

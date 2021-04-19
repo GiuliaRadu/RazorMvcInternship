@@ -39,5 +39,10 @@ namespace RazorMvc.Services
             var itemToBeUpdated = GetMemberById(intern.Id);
             itemToBeUpdated.Name = intern.Name;
         }
+
+        public void UpdateLocation(int id, int locationId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
