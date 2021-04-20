@@ -20,7 +20,7 @@
 }
 
 
-setInterval(refreshWeatherForecast, 3000);
+setTimeout(refreshWeatherForecast, 3000);
 
 function formatDate(jsonDate) {
     function join(t, a, s) {
