@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace RazorMvc.Models
@@ -13,5 +14,7 @@ namespace RazorMvc.Models
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Location Location { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
     }
 }
