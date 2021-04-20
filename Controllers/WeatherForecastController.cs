@@ -26,7 +26,7 @@ namespace RazorMvc.webApi.Controllers
         {
             _logger = logger;
 
-            latitude = double.Parse(Environment.GetEnvironmentVariable("DATABASE_URL") ?? configuration["WeatherForecast:latitude"], CultureInfo.InvariantCulture);
+            latitude = double.Parse(Environment.GetEnvironmentVariable("LATITUDE") ?? configuration["WeatherForecast:latitude"], CultureInfo.InvariantCulture);
             longitude = double.Parse(Environment.GetEnvironmentVariable("LONGITUDE") ?? configuration["WeatherForecast:longitude"], CultureInfo.InvariantCulture);
             apiKey = Environment.GetEnvironmentVariable("API_KEY") ?? configuration["WeatherForecast:apiKey"];
         }
@@ -38,7 +38,7 @@ namespace RazorMvc.webApi.Controllers
         [HttpGet]
         public List<WeatherForecast> Get()
         {
-            var weatherForecasts = Get(this.latitude, this.longitude);
+            var weatherForecasts = Get(latitude, longitude);
             return weatherForecasts.GetRange(1, 5);
         }
 
