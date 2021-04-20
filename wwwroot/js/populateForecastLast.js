@@ -13,7 +13,7 @@
                 $('#summary').text(tomorrow.summary);
             },
             error: function (data) {
-                alert(`failed to load data`);
+                alert(`Failed to load weather information`);
             }
         });
     });
