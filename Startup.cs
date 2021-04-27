@@ -54,6 +54,7 @@ namespace RazorMvc
 
             services.AddControllersWithViews();
             services.AddScoped<IInternshipService, InternshipDbService>();
+            services.AddScoped<EmployeeDbService>();
 
             services.AddSwaggerGen(c =>
             {
