@@ -17,6 +17,7 @@
     },
     "RazorMvc": {
       "commandName": "Project",
+      "commandLineArgs": "--recreateDb",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

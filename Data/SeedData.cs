@@ -23,6 +23,16 @@ namespace RazorMvc.Data
                 context.SaveChanges();
             }
 
+            if (!context.Employees.Any())
+            {
+                var employees = new Employee[]
+                {
+                     new Employee { FirstName = "Borys", LastName = "Lebeda", Email = "borys@gmail.com", Gender = "Male", Birthdate = DateTime.Parse("2021-04-01"), Picture = "poza" },
+                };
+                context.Employees.AddRange(employees);
+                context.SaveChanges();
+            }
+
             if (!context.Interns.Any())
             {
                 var interns = new Intern[]
