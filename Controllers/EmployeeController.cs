@@ -43,6 +43,14 @@ namespace RazorMvc.Controllers
             //hubContext.Clients.All.SendAsync("AddMember", newMember.Name, newMember.Id);
         }
 
+        // DELETE 
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            employeeService.RemoveEmployee(id);
+            //hubContext.Clients.All.SendAsync("RemoveMember", id);
+        }
+
 
     }
 }

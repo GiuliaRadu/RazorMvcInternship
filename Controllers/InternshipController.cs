@@ -72,7 +72,6 @@ namespace RazorMvc.Controllers
         {
             intershipService.RemoveMember(id);
             hubContext.Clients.All.SendAsync("RemoveMember",id);
-
         }
     }
 }

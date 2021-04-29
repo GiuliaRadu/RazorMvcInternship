@@ -36,5 +36,13 @@ namespace RazorMvc.Services
         {
             return db.Find<Employee>(id);
         }
+
+        public void RemoveEmployee(int id)
+        {
+            var employee = GetEmployeeById(id);
+            if (employee == null) return;
+            db.Remove<Employee>(employee);
+            db.SaveChanges();
+        }
     }
 }
